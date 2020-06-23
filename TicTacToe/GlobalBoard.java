@@ -1,26 +1,34 @@
 
 
-public class globalBoard {
+public class GlobalBoard {
 
-    private localBoard[][] localBoards;
+    private LocalBoard[][] localBoards;
     public final int length = 3;
     public final int width = 3;
     private String winner;
 
-    public globalBoard() {
-        localBoards = new localBoard[length][width];
+    public GlobalBoard() {
+        localBoards = new LocalBoard[length][width];
         for (int row = 0; row < length; row++) {
             for (int col = 0; col < width; col++) {
-                localBoards[row][col] = new localBoard();
+                localBoards[row][col] = new LocalBoard();
             }
         }
         winner = "Neither";
+
     }
 
+    public void updateLocalBoards() {
+        for (int row = 0; row < length; row++) {
+            for (int col = 0; col < width; col++) {
+                localBoards[row][col].updateBoard();
+            }
+        }
+    }
     public boolean gameOver() {
         //check all rows
         for (int row = 0; row < length; row++) {
-            if (!localBoards[row][0].getWinner().equals("Neither") &&
+            if (!localBoards[row][0].getWinner().equals(" ") &&
             localBoards[row][0].getWinner().equals(localBoards[row][1].getWinner()) &&
             localBoards[row][1].getWinner().equals(localBoards[row][2].getWinner())) {
                 winner = localBoards[row][0].getWinner();
@@ -30,7 +38,7 @@ public class globalBoard {
 
         //check all cols
         for (int col = 0; col < width; col++) {
-            if (!localBoards[0][col].getWinner().equals("Neither") &&
+            if (!localBoards[0][col].getWinner().equals(" ") &&
             localBoards[0][col].getWinner().equals(localBoards[1][col].getWinner()) &&
             localBoards[1][col].getWinner().equals(localBoards[2][col].getWinner())) {
                 winner = localBoards[0][col].getWinner();
@@ -39,13 +47,13 @@ public class globalBoard {
         }
 
         //check diagonals
-        if (!localBoards[0][0].getWinner().equals("Neither") &&
+        if (!localBoards[0][0].getWinner().equals(" ") &&
         localBoards[0][0].getWinner().equals(localBoards[1][1].getWinner()) && 
         localBoards[1][1].getWinner().equals(localBoards[2][2].getWinner())) {
             winner = localBoards[0][0].getWinner();
             return true;
         }
-        if (!localBoards[0][2].getWinner().equals("Neither") &&
+        if (!localBoards[0][2].getWinner().equals(" ") &&
         localBoards[0][2].getWinner().equals(localBoards[1][1].getWinner()) && 
         localBoards[1][1].getWinner().equals(localBoards[2][0].getWinner())) {
             winner = localBoards[0][2].getWinner();
@@ -53,7 +61,7 @@ public class globalBoard {
         }
 
         //board is full but no three-in-a-row (tie)
-        if (boardIsFull()) {
+        if (tie() || boardIsFull()) {
             winner = "Neither";
             return true;
         }
@@ -71,35 +79,56 @@ public class globalBoard {
         return true;
     }
 
+    private boolean tie() {
+        for (int row = 0; row < length; row++) {
+            for (int col = 0; col < width; col++) {
+                if (!localBoards[row][col].getBoardFinished()) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     public void display() {
-    
-        for (localBoard[] row : localBoards) {
+        int globalRow = 0;
+        for (LocalBoard[] row : localBoards) {
 
             System.out.println("_____________  _____________  _____________");
-   
-            for (int smallRow = 0; smallRow < 3; smallRow++) {
+            
+            for (int localRow = 0; localRow < 3; localRow++) {
  
-                for (localBoard board : row) {
+                for (LocalBoard board : row) {
  
-                    for (int smallCol = 0; smallCol < 3; smallCol++) {
+                    for (int localCol = 0; localCol < 3; localCol++) {
                         System.out.print("|");
-                        System.out.print(" " + board.getBox(smallRow, smallCol) + " ");
+                        System.out.print(" " + board.getBox(localRow, localCol) + " ");
                     }
                     System.out.print("|  ");
                 }
+                
                 System.out.println();
                 System.out.println("-------------  -------------  -------------");
 
             }
-            System.out.println();
+            System.out.println("      " + localBoards[globalRow][0].getIsCurrentBoard() + "              " + localBoards[globalRow][1].getIsCurrentBoard() + "              " + localBoards[globalRow][2].getIsCurrentBoard());
+            globalRow++;
         }
+        System.out.println("Global board representation:");
+        System.out.println("_____________");
+        System.out.println("| "+ localBoards[0][0].getWinner() +" | "+ localBoards[0][1].getWinner() +" | "+ localBoards[0][2].getWinner() +" |");
+        System.out.println("-------------");
+        System.out.println("| "+ localBoards[1][0].getWinner() +" | "+ localBoards[1][1].getWinner() +" | "+ localBoards[1][2].getWinner() +" |");
+        System.out.println("-------------");
+        System.out.println("| "+ localBoards[2][0].getWinner() +" | "+ localBoards[2][1].getWinner() +" | "+ localBoards[2][2].getWinner() +" |");
+        System.out.println("-------------");
     }
 
     public String getWinner() {
         return winner;
     }
     
-    public localBoard getLocalBoard(int rowInd, int colInd) {
+    public LocalBoard getLocalBoard(int rowInd, int colInd) {
         return localBoards[rowInd][colInd];
     }
 }

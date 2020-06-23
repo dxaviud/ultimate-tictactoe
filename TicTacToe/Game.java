@@ -4,26 +4,26 @@ import java.util.Scanner;
 import Marks.*;
 import javax.swing.JFrame;
 
-public class TicTacToeGame {
+public class Game {
 
-    private TicTacToeBigBoard bigGameBoard;
+    private GlobalBoard globalBoard;
     private int turn;
     private String currentPlayer;
-    private TicTacToeBoard currentBoard;
+    private LocalBoard currentBoard;
 
-    public TicTacToeGame() {
-        bigGameBoard = new TicTacToeBigBoard();
+    public Game() {
+        globalBoard = new GlobalBoard();
         turn = 1;
         currentPlayer = "X";
         currentBoard = null;
     }
 
     public void runGame() {
-        JFrame gameFrame = new JFrame();
-        gameFrame.setTitle("Ultimate TicTacToe");
-        gameFrame.setResizable(false);
-        gameFrame.setVisible(true);
-        gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JFrame GameFrame = new JFrame();
+        GameFrame.setTitle("Ultimate TicTacToe");
+        GameFrame.setResizable(false);
+        GameFrame.setVisible(true);
+        GameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         while(true) {
 
@@ -37,19 +37,21 @@ public class TicTacToeGame {
 
             playerMakesMark();
 
+            globalBoard.updateLocalBoards();
+
             switchCurrentPlayer();
 
             turn++;
-
-            if (bigGameBoard.gameOver()) {
+            
+            if (globalBoard.gameOver()) {
                 displayBoard();
                 break;
             }
         }
 
-        //game over message
+        //Game over message
         System.out.println("\n");
-        System.out.println("Game over. Winner: " + bigGameBoard.getWinner());
+        System.out.println("Game over. Winner: " + globalBoard.getWinner());
     }
 
     public void switchCurrentPlayer() {
@@ -69,26 +71,31 @@ public class TicTacToeGame {
     }
 
     public void pickBoard() {
-        int pick = -1;
-        int[] possibleInputs = {1,2,3,4,5,6,7,8,9};
-        System.out.println("possibleInputs: " + getStringArray(possibleInputs));
+        int rowInd = -1;
+        int colInd = -1;
+        int[] possibleInputs = {0,1,2};
+        System.out.println("Pick a local board using row and column. Possible inputs: " + getStringArray(possibleInputs));
         while(true) {
-            pick = getPlayerInput("Enter board number: ", possibleInputs);
-            if (bigGameBoard.getBoard(pick).boardIsFull()) {
-                System.out.println("That board is full.");
-            } else {
+            rowInd = getPlayerInput("Enter row index: ", possibleInputs);
+            colInd = getPlayerInput("Enter col index: ", possibleInputs);
+            if (!globalBoard.getLocalBoard(rowInd, colInd).boardIsFull()) {
                 break;
+            } else {
+                System.out.println("Must pick board that is not full.");
             }
-            
         }
-        currentBoard = bigGameBoard.getBoard(pick);
+        if (turn > 1) {
+            currentBoard.setIsNotCurrentBoard();
+        }
+        currentBoard = globalBoard.getLocalBoard(rowInd, colInd);
+        currentBoard.setIsCurrentBoard();
     }
 
     public void makeGeneralMark(Mark mark) {
         int rowInd = -1;
         int colInd = -1;
         int[] possibleInputs = {0,1,2};
-        System.out.println("Possible inputs: " + getStringArray(possibleInputs));
+        System.out.println("Pick a box using row and column. Possible inputs: " + getStringArray(possibleInputs));
         while(true) {
             rowInd = getPlayerInput("Enter row index: ", possibleInputs);
             colInd = getPlayerInput("Enter col index: ", possibleInputs);
@@ -99,6 +106,9 @@ public class TicTacToeGame {
             }
         }
         currentBoard.setBox(rowInd, colInd, mark);
+        currentBoard.setIsNotCurrentBoard();
+        currentBoard = globalBoard.getLocalBoard(rowInd, colInd);
+        currentBoard.setIsCurrentBoard();
     }
 
     public int getPlayerInput(String prompt, int[] possibleInputs) {
@@ -146,6 +156,6 @@ public class TicTacToeGame {
     }
 
     public void displayBoard() {
-        bigGameBoard.display();
+        globalBoard.display();
     }
 }

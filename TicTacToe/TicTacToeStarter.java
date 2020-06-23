@@ -2,7 +2,7 @@
 
 public class TicTacToeStarter {
     public static void main(String[] args) {
-        TicTacToeGame game = new TicTacToeGame();
+        Game game = new Game();
         game.runGame();
     }
 }

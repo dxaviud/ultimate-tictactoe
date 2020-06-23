@@ -9,9 +9,10 @@ public class LocalBoard {
     public final int width = 3;
     private String winner;
     private boolean boardFinished;
+    private String isCurrentBoard;
 
     public LocalBoard() {
-        winner = "Neither";
+        winner = " ";
         boardFinished = false;
         boxes = new Mark[length][width];
         for (int row = 0; row < boxes.length; row++) {
@@ -19,11 +20,28 @@ public class LocalBoard {
                 boxes[row][col] = new NoMark();
             }
         }
+        isCurrentBoard = " ";
+    }
+
+    public String getIsCurrentBoard() {
+        return isCurrentBoard;
+    }
+
+    public void setIsCurrentBoard() {
+        isCurrentBoard = "^";
+    }
+
+    public void setIsNotCurrentBoard() {
+        isCurrentBoard = " ";
     }
 
     public boolean getBoardFinished() {
+        return boardFinished;
+    }
+    
+    public void updateBoard() {
         if (boardFinished) {
-            return true;
+            return;
         }
         //check all rows
         for (int row = 0; row < length; row++) {
@@ -32,7 +50,7 @@ public class LocalBoard {
             boxes[row][1].equals(boxes[row][2])) {
                 winner = boxes[row][0].toString();
                 boardFinished = true;
-                return true;
+                return;
             }
         }
 
@@ -43,7 +61,7 @@ public class LocalBoard {
             boxes[1][col].equals(boxes[2][col])) {
                 winner = boxes[0][col].toString();
                 boardFinished = true;
-                return true;
+                return;
             }
         }
 
@@ -53,24 +71,23 @@ public class LocalBoard {
         boxes[1][1].equals(boxes[2][2])) {
             winner = boxes[0][0].toString();
             boardFinished = true;
-            return true;
+            return;
         }
         if (!(boxes[0][2] instanceof NoMark) &&
         boxes[0][2].equals(boxes[1][1]) && 
         boxes[1][1].equals(boxes[2][0])) {
             winner = boxes[0][2].toString();
             boardFinished = true;
-            return true;
+            return;
         }
 
         //board is full but no three-in-a-row (tie)
         if (boardIsFull()) {
-            winner = "Neither";
+            winner = " ";
             boardFinished = true;
-            return true;
+            return;
         }
         boardFinished = false;
-        return false;
     }
 
     public boolean boardIsFull() {
