@@ -17,7 +17,7 @@ public class LocalBoard {
         boxes = new Mark[length][width];
         for (int row = 0; row < boxes.length; row++) {
             for (int col = 0; col < boxes[row].length; col++) {
-                boxes[row][col] = new NoMark();
+                boxes[row][col] = new NoMark(row, col);
             }
         }
         isCurrentBoard = " ";

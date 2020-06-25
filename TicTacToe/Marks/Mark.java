@@ -4,6 +4,8 @@ import java.awt.Image;
 
 public abstract class Mark {
     private Image image;
+    protected int rowIndex;
+    protected int colIndex;
 
     public Image getImage() {
         return image;
@@ -19,6 +21,14 @@ public abstract class Mark {
             return true;
         }
         return false;
+    }
+
+    public int getRowIndex() {
+        return rowIndex;
+    }
+
+    public int getColIndex() {
+        return colIndex;
     }
 
     public abstract String toString();

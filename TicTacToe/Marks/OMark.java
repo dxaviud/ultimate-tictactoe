@@ -5,7 +5,9 @@ import java.awt.Image;
 public class OMark extends Mark{
     private Image image;
 
-    public OMark() {
+    public OMark(int row, int col) {
+        rowIndex = row;
+        colIndex = col;
         // set the image
         // super.setImage();
     }

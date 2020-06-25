@@ -5,7 +5,9 @@ import java.awt.Image;
 public class XMark extends Mark{
     private Image image;
 
-    public XMark() {
+    public XMark(int row, int col) {
+        rowIndex = row;
+        colIndex = col;
         // set the image
         // super.setImage();
     }

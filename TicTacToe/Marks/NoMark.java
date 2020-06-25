@@ -5,7 +5,9 @@ import java.awt.Image;
 public class NoMark extends Mark {
     private Image image;
 
-    public NoMark() {
+    public NoMark(int row, int col) {
+        rowIndex = row;
+        colIndex = col;
         // set the image
         // super.setImage();
     }
