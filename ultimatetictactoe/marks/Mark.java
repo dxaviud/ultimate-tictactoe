@@ -1,4 +1,4 @@
-package Marks;
+package ultimatetictactoe.marks;
 
 import java.awt.Image;
 

@@ -1,3 +1,6 @@
+package ultimatetictactoe.boards;
+
+import ultimatetictactoe.Game;
 import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Graphics2D;

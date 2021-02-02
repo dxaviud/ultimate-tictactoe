@@ -1,6 +1,6 @@
+package ultimatetictactoe.boards;
 
-
-import Marks.*;
+import ultimatetictactoe.marks.*;
 
 public class LocalBoard {
     

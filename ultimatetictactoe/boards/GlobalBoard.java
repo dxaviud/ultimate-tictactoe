@@ -1,4 +1,4 @@
-
+package ultimatetictactoe.boards;
 
 public class GlobalBoard {
 

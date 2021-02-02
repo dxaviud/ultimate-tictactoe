@@ -1,6 +1,6 @@
+package ultimatetictactoe;
 
-
-public class TicTacToeStarter {
+class TicTacToeStarter {
     public static void main(String[] args) {
         Game game = new Game();
         game.runGame();

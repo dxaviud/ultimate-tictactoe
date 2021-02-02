@@ -1,7 +1,8 @@
+package ultimatetictactoe;
 
-
+import ultimatetictactoe.boards.*;
+import ultimatetictactoe.marks.*;
 import java.util.Scanner;
-import Marks.*;
 import javax.swing.JFrame;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
@@ -73,9 +74,11 @@ public class Game {
                                     if (xClick >= xMin && xClick <= xMax && yClick >= yMin && yClick <= yMax) {
                                         if (!(globalBoard.getLocalBoard(y, x).getBox(y2, x2) instanceof NoMark)) {
                                             clickedMark = null;
+                                            System.out.println("null");
                                         } else {
                                             clickedMark = globalBoard.getLocalBoard(y, x).getBox(y2, x2);
                                             currentBoard = globalBoard.getLocalBoard(y, x);
+                                            System.out.println("clicked mark: " + clickedMark);
                                         }
                                         return;
                                     }
@@ -119,7 +122,6 @@ public class Game {
             }
         }
 
-        //Game over message
         System.out.println("\n");
         System.out.println("Game over. Winner: " + globalBoard.getWinner());
     }
@@ -231,7 +233,7 @@ public class Game {
 
     private void playerMakesMark() {
         while(clickedMark == null) {
-            //wait for click
+            System.out.println("waiting for click");
         }
         if (turn % 2 == 0) {
             makeOMark();
