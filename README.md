@@ -1,7 +1,7 @@
 # ultimate-tictactoe
 
 ## About
-This is my implementation of Ultimate tic-tac-toe using Java. I Used Java's Swing API to create the GUI.  
+My implementation of Ultimate tic-tac-toe using Java. I Used Java's Swing API to create the GUI.
 
 ![Ultimate tic-tac-toe1](https://dxaviud.github.io/images/ultimatettt.gif)   
 
