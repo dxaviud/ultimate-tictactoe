@@ -1,4 +1,4 @@
-package ultimatetictactoe;
+package src;
 
 import ultimatetictactoe.boards.*;
 import ultimatetictactoe.marks.*;
